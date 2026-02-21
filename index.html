@@ -179,26 +179,30 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         const schedule = {
-            1: [{ name: "Git & ვერსიების კონტროლი", teacher: "ნინო ნოზაძე", loc: "103", slots: [9,10,11,12,], type: "bachelor" },
-            { name:"დარგობრივი ინგლისური ენა Front-end დეველოპმენტისთვის", teacher:"თიკო კახნიაშვილი", loc:"103", slots:[13,14], type:"bachelor" }
-        ],
-            2: [
-                { name: "Git & ვერსიების კონტროლი", teacher: "ნინო ნოზაძე", loc: "დისტანციური", slots: [13,14,15], type: "bachelor" },
-                { name: "დარგობრივი ინგლისური ენა Front-end დეველოპმენტისთვის", teacher: "თიკო კახნიაშვილი", loc: "დისტანციური", slots: [13,14,15], type: "bachelor" }
+            1: [ // ორშაბათი
+                { name: "Git ტექნოლოგიების გამოყენება", teacher: "ნინი ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
+                { name: "ინგლისური ენა Front-end-ისთვის", teacher: "თინათინ კახნიაშვილი", loc: "103", slots: [13,14], type: "bachelor" }
             ],
-            3: [{ name: "JavaScript Effects", teacher: "ნიკა ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12,13,14], type: "bachelor" }],
-            4: [
-                { name: "Git & ვერსიების კონტროლი", teacher: "ნინო ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12,], type: "bachelor" },
-                {name:"დარგობრივი ინგლისური ენა Front-end დეველოპმენტისთვის",teacher:"თიკო კახნიაშვილი", loc:"დისტანციური", slots:[13,14,15], type:"bachelor"},
+            2: [ // სამშაბათი
+                { name: "Git ტექნოლოგიების გამოყენება", teacher: "ნინი ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" },
+                { name: "ინგლისური ენა Front-end-ისთვის", teacher: "თინათინ კახნიაშვილი", loc: "დისტანციური", slots: [13,14,15], type: "bachelor" }
+            ],
+            3: [ // ოთხშაბათი
+                { name: "ვებ გვერდის მარკირება და სტილები", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12,13,14], type: "bachelor" }
+            ],
+            4: [ // ხუთშაბათი
+                { name: "JavaScript-ით ეფექტების შექმნა", teacher: "ნიკა ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" },
+                { name: "ინგლისური ენა Front-end-ისთვის", teacher: "თინათინ კახნიაშვილი", loc: "დისტანციური", slots: [13,14,15], type: "bachelor" },
                 { name: "მაგისტრატურის ლექცია", teacher: "მაგისტრატურა", loc: "დისტანციური", slots: [19], type: "master" }
             ],
-            5: [{ name: "JavaScript Effects", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" }],
-            6: [
-                { name: "JavaScript Effects", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
+            5: [ // პარასკევი
+                { name: "JavaScript-ით ეფექტების შექმნა", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" }
+            ],
+            6: [ // შაბათი
+                { name: "JavaScript-ით ეფექტების შექმნა", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
                 { name: "მაგისტრატურის ლექცია", teacher: "მაგისტრატურა", loc: "დისტანციური", slots: [16,17], type: "master" }
             ]
         };
-
         function update() {
             const now = new Date();
             const day = now.getDay();

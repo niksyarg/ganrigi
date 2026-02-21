@@ -57,18 +57,6 @@
             z-index: 2;
         }
 
-        .milestone-tag {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 0.7rem;
-            background: rgba(0, 210, 255, 0.1);
-            padding: 5px 12px;
-            border-radius: 10px;
-            color: var(--accent);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-        }
-
         .status-badge {
             display: inline-block;
             padding: 10px 24px;
@@ -201,8 +189,10 @@
             6: [ // შაბათი
                 { name: "JavaScript-ით ეფექტების შექმნა", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
                 { name: "მაგისტრატურის ლექცია", teacher: "მაგისტრატურა", loc: "დისტანციური", slots: [16,17], type: "master" }
-            ]
+            ],
+            0: [] // კვირა - დასვენება
         };
+
         function update() {
             const now = new Date();
             const day = now.getDay();
@@ -215,26 +205,39 @@
             let nextInDay = today.find(l => l.slots.find(s => s > hr));
             let target = new Date();
             
-            // ხვალინდელი გეგმა
-            let nextD = (day + 1) % 7 || 1;
-            document.getElementById('tomorrowPlan').innerText = schedule[nextD].map(l => l.name).join(' | ');
+            // ხვალინდელი გეგმის ლოგიკა
+            let nextDayIndex = (day + 1) % 7;
+            let tomorrowPlanElement = document.getElementById('tomorrowPlan');
+            if (schedule[nextDayIndex] && schedule[nextDayIndex].length > 0) {
+                tomorrowPlanElement.innerText = schedule[nextDayIndex].map(l => l.name).join(' | ');
+                tomorrowPlanElement.style.color = ""; 
+            } else {
+                tomorrowPlanElement.innerText = "დასვენება ⛱️";
+                tomorrowPlanElement.style.color = "#00ff88";
+            }
 
             if (current && min < 50) {
-                target.setHours(hr, 50, 0);
+                target.setHours(hr, 50, 0, 0);
                 const color = current.type === "master" ? "#ff007a" : "#00d2ff";
                 refresh(current.type === "master" ? "მაგისტრატურა" : "მიმდინარეობს", current.name, current.teacher, current.loc, color, target - now, (min*60 + sec)/3000);
             } else if (current && min >= 50) {
-                target.setHours(hr + 1, 0, 0);
+                target.setHours(hr + 1, 0, 0, 0);
                 refresh("დასვენება", "შესვენება ☕", "--", "--", "#00ff88", target - now, ((min-50)*60 + sec)/600);
             } else {
-                let nDay = day;
+                let searchDay = day;
                 let nSched = nextInDay;
+
                 if (!nSched) {
-                    nDay = (day + 1) % 7 || 1;
-                    nSched = schedule[nDay][0];
-                    target.setDate(now.getDate() + (nDay > day ? nDay - day : 7 - day + nDay));
+                    do {
+                        searchDay = (searchDay + 1) % 7;
+                        nSched = schedule[searchDay] && schedule[searchDay].length > 0 ? schedule[searchDay][0] : null;
+                    } while (!nSched && searchDay !== day);
+                    
+                    let daysDiff = searchDay > day ? searchDay - day : 7 - day + searchDay;
+                    target.setDate(now.getDate() + daysDiff);
                 }
-                target.setHours(nSched.slots[0], 0, 0);
+                
+                target.setHours(nSched.slots[0], 0, 0, 0);
                 refresh("მოლოდინი", nSched.name, nSched.teacher, nSched.loc, "#8b949e", target - now, 0);
             }
         }
@@ -263,7 +266,6 @@
                 `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
         }
 
-        // Particles Configuration
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },

@@ -47,7 +47,7 @@
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 40px;
-            padding: 50px;
+            padding: 40px 50px;
             width: 90%;
             max-width: 460px;
             text-align: center;
@@ -57,16 +57,26 @@
             z-index: 2;
         }
 
-        .milestone-tag {
+        /* ახალი ღილაკი კვირის განრიგისთვის */
+        .week-schedule-btn {
             position: absolute;
             top: 20px;
-            right: 25px;
-            font-size: 0.7rem;
-            background: rgba(0, 210, 255, 0.1);
-            padding: 5px 12px;
-            border-radius: 10px;
-            color: var(--accent);
-            border: 1px solid rgba(0, 210, 255, 0.2);
+            left: 25px;
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 12px;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .week-schedule-btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
         .status-badge {
@@ -84,9 +94,9 @@
 
         .timer-wrapper {
             position: relative;
-            width: 260px;
-            height: 260px;
-            margin: 30px auto;
+            width: 240px;
+            height: 240px;
+            margin: 20px auto;
         }
 
         svg { transform: rotate(-90deg); filter: drop-shadow(0 0 15px var(--accent-glow)); }
@@ -107,7 +117,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 3.2rem;
+            font-size: 3rem;
             font-weight: 900;
             color: #fff;
             letter-spacing: -1px;
@@ -118,25 +128,64 @@
         .info-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 25px;
-            padding: 25px;
-            margin-top: 35px;
+            padding: 22px;
+            margin-top: 25px;
             text-align: left;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .info-row { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
         .icon { font-size: 1.2rem; opacity: 0.8; }
-        .label { font-size: 0.8rem; opacity: 0.5; text-transform: uppercase; display: block; }
-        .val { color: #fff; font-weight: 600; font-size: 1.05rem; }
+        .label { font-size: 0.75rem; opacity: 0.5; text-transform: uppercase; display: block; }
+        .val { color: #fff; font-weight: 600; font-size: 1rem; }
 
         .tomorrow-preview {
-            margin-top: 20px;
-            padding-top: 15px;
+            margin-top: 15px;
+            padding-top: 12px;
             border-top: 1px dotted rgba(255, 255, 255, 0.1);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--accent);
             font-style: italic;
         }
+
+        /* ამოხტომის ეფექტი (Modal) მთელი კვირის სანახავად */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: rgba(10, 15, 26, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            text-align: left;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px; right: 25px;
+            font-size: 1.5rem; color: #fff;
+            cursor: pointer; opacity: 0.5;
+            transition: 0.3s;
+        }
+        .close-btn:hover { opacity: 1; }
+
+        .modal h3 { color: #fff; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;}
+        
+        .day-block { margin-bottom: 12px; font-size: 0.85rem; }
+        .day-title { color: var(--accent); font-weight: bold; margin-bottom: 4px; }
+        .day-items { opacity: 0.8; padding-left: 10px; border-left: 2px solid rgba(0,210,255,0.2); }
     </style>
 </head>
 <body>
@@ -144,13 +193,15 @@
     <div id="particles-js"></div>
 
     <div class="glass-panel">
+        <div class="week-schedule-btn" onclick="toggleModal(true)">📅 კვირის გეგმა</div>
+        
         <div id="statusBadge" class="status-badge">სისტემა ჩართულია</div>
-        <h2 id="activityName" style="margin: 0; color: #fff; font-size: 1.4rem;">იტვირთება...</h2>
+        <h2 id="activityName" style="margin: 0; color: #fff; font-size: 1.3rem;">იტვირთება...</h2>
 
         <div class="timer-wrapper">
-            <svg width="260" height="260">
-                <circle class="circle-bg" cx="130" cy="130" r="120"></circle>
-                <circle id="progressCircle" class="circle-progress" cx="130" cy="130" r="120"></circle>
+            <svg width="240" height="240">
+                <circle class="circle-bg" cx="120" cy="120" r="110"></circle>
+                <circle id="progressCircle" class="circle-progress" cx="120" cy="120" r="110"></circle>
             </svg>
             <div class="timer-display" id="timeDisplay">00:00:00</div>
         </div>
@@ -159,7 +210,7 @@
             <div class="info-row">
                 <span class="icon">👨‍🏫</span>
                 <div>
-                    <span class="label">ლექტორი / პროგრამა</span>
+                    <span class="label">ლექტორი</span>
                     <span id="lecturer" class="val">--</span>
                 </div>
             </div>
@@ -176,34 +227,78 @@
         </div>
     </div>
 
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleModal(false)">&times;</span>
+            <h3>🗓️ მთელი კვირის განრიგი</h3>
+            
+            <div class="day-block">
+                <div class="day-title">ორშაბათი (დისტანციური)</div>
+                <div class="day-items">09:00 - Git / 11:00 - Sass/SCSS / 13:00 - პიროვნული უნარები</div>
+            </div>
+            <div class="day-block">
+                <div class="day-title">სამშაბათი (აუდ. 103)</div>
+                <div class="day-items">09:00 - Sass/SCSS / 13:00 - Git</div>
+            </div>
+            <div class="day-block">
+                <div class="day-title">ოთხშაბათი (დისტანციური)</div>
+                <div class="day-items">09:00 - Git / 13:00 - დარგობრივი ინგლისური</div>
+            </div>
+            <div class="day-block">
+                <div class="day-title">ხუთშაბათი (დისტანციური)</div>
+                <div class="day-items">09:00 - JS ეფექტები / 13:00 - ინგლისური / 19:00 - მაგისტრატურა</div>
+            </div>
+            <div class="day-block">
+                <div class="day-title">პარასკევი (აუდ. 103)</div>
+                <div class="day-items">09:00 - JS ეფექტები / 13:00 - ინგლისური</div>
+            </div>
+            <div class="day-block">
+                <div class="day-title">შაბათი (შერეული)</div>
+                <div class="day-items">09:00 - JS ეფექტები (103) / 16:00 - მაგისტრატურა (დისტ.)</div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+      // შენი განახლებული რეალური განრიგი
       const schedule = {
-    1: [ // ორშაბათი
-        { name: "Git ტექნოლოგიების გამოყენება", teacher: "ნინი ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" }
-    ],
-    2: [ // სამშაბათი
-        { name: "Sass/Scss და Tailwind", teacher: "ნინი ნოზაძე", loc: "103", slots: [9,10,11,12,13,14], type: "bachelor" }
-    ],
-    3: [ // ოთხშაბათი
-        { name: "Git ტექნოლოგიების გამოყენება", teacher: "ნინი ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" },
-        { name: "ინგლისური ენა Front-end-ისთვის", teacher: "თინათინ კახნიაშვილი", loc: "დისტანციური", slots: [13,14], type: "bachelor" }
-    ],
-    4: [ // ხუთშაბათი
-        { name: "JavaScript-ით ეფექტების შექმნა", teacher: "ნიკა ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" },
-        { name: "ინგლისური ენა Front-end-ისთვის", teacher: "თინათინ კახნიაშვილი", loc: "დისტანციური", slots: [13,14,15], type: "bachelor" },
-        { name: "მაგისტრატურის ლექცია", teacher: "მაგისტრატურა", loc: "დისტანციური", slots: [19], type: "master" }
-    ],
-    5: [ // პარასკევი
-        { name: "JavaScript-ით ეფექტების შექმნა", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
-        { name: "ინგლისური ენა Front-end-ისთვის", teacher: "თინათინ კახნიაშვილი", loc: "103", slots: [13,14,15], type: "bachelor" }
-    ],
-    6: [ // შაბათი
-        { name: "JavaScript-ით ეფექტების შექმნა", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
-        { name: "მაგისტრატურის ლექცია", teacher: "მაგისტრატურა", loc: "დისტანციური", slots: [16,17], type: "master" }
-    ],
-    0: [] // კვირა
-};
+        1: [ // ორშაბათი
+            { name: "ვერსიების კონტროლი Git", teacher: "ნინი ნოზაძე", loc: "დისტანციური", slots: [9,10], type: "bachelor" },
+            { name: "სტილიზაცია Sass/SCSS", teacher: "ნინი ნოზაძე", loc: "დისტანციური", slots: [11,12], type: "bachelor" },
+            { name: "პიროვნული უნარები", teacher: "ლევან ნიქარიძე", loc: "დისტანციური", slots: [13,14], type: "bachelor" }
+        ],
+        2: [ // სამშაბათი
+            { name: "სტილიზაცია Sass/SCSS", teacher: "ნინი ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
+            { name: "ვერსიების კონტროლი Git", teacher: "ნინი ნოზაძე", loc: "103", slots: [13,14], type: "bachelor" }
+        ],
+        3: [ // ოთხშაბათი
+            { name: "ვერსიების კონტროლი Git", teacher: "ნინი ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" },
+            { name: "დარგობრივი ინგლისური", teacher: "თინათინ კახნიაშვილი", loc: "დისტანციური", slots: [13,14], type: "bachelor" }
+        ],
+        4: [ // ხუთშაბათი
+            { name: "JS ინტერაქტიულობა და ეფექტები", teacher: "ნიკა ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" },
+            { name: "დარგობრივი ინგლისური", teacher: "თინათინ კახნიაშვილი", loc: "დისტანციური", slots: [13,14,15], type: "bachelor" },
+            { name: "მაგისტრატურის ლექცია", teacher: "მაგისტრატურა", loc: "დისტანციური", slots: [19,20], type: "master" }
+        ],
+        5: [ // პარასკევი
+            { name: "JS ინტერაქტიულობა და ეფექტები", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
+            { name: "დარგობრივი ინგლისური", teacher: "თინათინ კახნიაშვილი", loc: "103", slots: [13,14,15], type: "bachelor" }
+        ],
+        6: [ // შაბათი
+            { name: "JS ინტერაქტიულობა და ეფექტები", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
+            { name: "პიროვნული უნარები", teacher: "ლევან ნიქარიძე", loc: "დისტანციური", slots: [17,18], type: "bachelor" },
+            { name: "მაგისტრატურის ლექცია", teacher: "მაგისტრატურა", loc: "დისტანციური", slots: [16], type: "master" } // პირობითად ჩავსვი 16:00
+        ],
+        0: [] // კვირა
+    };
+
+        // Modal ფუნქციონალი
+        function toggleModal(show) {
+            const modal = document.getElementById('scheduleModal');
+            modal.style.display = show ? 'flex' : 'none';
+        }
+
         function update() {
             const now = new Date();
             const day = now.getDay();
@@ -217,30 +312,52 @@
             let target = new Date();
             
             // ხვალინდელი გეგმა
-            let nextD = (day + 1) % 7 || 1;
-            document.getElementById('tomorrowPlan').innerText = schedule[nextD].map(l => l.name).join(' | ');
+            let nextD = (day + 1) % 7;
+            if (schedule[nextD] && schedule[nextD].length > 0) {
+                let uniqueLectures = [...new Set(schedule[nextD].map(l => l.name))];
+                document.getElementById('tomorrowPlan').innerText = uniqueLectures.join(' | ');
+            } else {
+                document.getElementById('tomorrowPlan').innerText = "თავისუფალი დღე! 🎉";
+            }
+
+            // წრეხაზის სიგრძის ფორმულა (2 * PI * R) -> 2 * 3.14159 * 110 ≈ 691
+            const circleLength = 691;
+            const circle = document.getElementById('progressCircle');
+            circle.style.strokeDasharray = circleLength;
 
             if (current && min < 50) {
                 target.setHours(hr, 50, 0);
                 const color = current.type === "master" ? "#ff007a" : "#00d2ff";
-                refresh(current.type === "master" ? "მაგისტრატურა" : "მიმდინარეობს", current.name, current.teacher, current.loc, color, target - now, (min*60 + sec)/3000);
+                refresh(current.type === "master" ? "მაგისტრატურა" : "მიმდინარეობს", current.name, current.teacher, current.loc, color, target - now, (min*60 + sec)/3000, circleLength);
             } else if (current && min >= 50) {
                 target.setHours(hr + 1, 0, 0);
-                refresh("დასვენება", "შესვენება ☕", "--", "--", "#00ff88", target - now, ((min-50)*60 + sec)/600);
+                refresh("დასვენება", "შესვენება ☕", "--", "--", "#00ff88", target - now, ((min-50)*60 + sec)/600, circleLength);
             } else {
                 let nDay = day;
                 let nSched = nextInDay;
                 if (!nSched) {
-                    nDay = (day + 1) % 7 || 1;
-                    nSched = schedule[nDay][0];
-                    target.setDate(now.getDate() + (nDay > day ? nDay - day : 7 - day + nDay));
+                    for(let i=1; i<=7; i++) {
+                        let checkDay = (day + i) % 7;
+                        if(schedule[checkDay] && schedule[checkDay].length > 0) {
+                            nDay = checkDay;
+                            nSched = schedule[checkDay][0];
+                            let daysDiff = nDay > day ? nDay - day : 7 - day + nDay;
+                            target.setDate(now.getDate() + daysDiff);
+                            break;
+                        }
+                    }
                 }
-                target.setHours(nSched.slots[0], 0, 0);
-                refresh("მოლოდინი", nSched.name, nSched.teacher, nSched.loc, "#8b949e", target - now, 0);
+                
+                if (nSched) {
+                    target.setHours(nSched.slots[0], 0, 0);
+                    refresh("მოლოდინი", nSched.name, nSched.teacher, nSched.loc, "#8b949e", target - now, 0, circleLength);
+                } else {
+                    refresh("თავისუფალი", "ლექციები არ არის", "--", "--", "#00ff88", 0, 0, circleLength);
+                }
             }
         }
 
-        function refresh(stat, act, teach, loc, col, diff, prog) {
+        function refresh(stat, act, teach, loc, col, diff, prog, circleLength) {
             const badge = document.getElementById('statusBadge');
             badge.innerText = stat;
             badge.style.background = col + "22";
@@ -253,9 +370,14 @@
             
             const circle = document.getElementById('progressCircle');
             circle.style.stroke = col;
-            circle.style.strokeDashoffset = 754 - (prog * 754);
+            circle.style.strokeDashoffset = circleLength - (prog * circleLength);
             document.documentElement.style.setProperty('--accent', col);
             document.documentElement.style.setProperty('--accent-glow', col + "88");
+
+            if(diff <= 0) {
+                document.getElementById('timeDisplay').innerText = "00:00:00";
+                return;
+            }
 
             const h = Math.floor(diff / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);

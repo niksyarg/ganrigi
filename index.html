@@ -57,7 +57,6 @@
             z-index: 2;
         }
 
-        /* ახალი ღილაკი კვირის განრიგისთვის */
         .week-schedule-btn {
             position: absolute;
             top: 20px;
@@ -148,7 +147,6 @@
             font-style: italic;
         }
 
-        /* ამოხტომის ეფექტი (Modal) მთელი კვირის სანახავად */
         .modal {
             display: none;
             position: fixed;
@@ -166,10 +164,12 @@
             border-radius: 30px;
             padding: 30px;
             width: 90%;
-            max-width: 500px;
+            max-width: 520px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             text-align: left;
             position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .close-btn {
@@ -183,9 +183,9 @@
 
         .modal h3 { color: #fff; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;}
         
-        .day-block { margin-bottom: 12px; font-size: 0.85rem; }
+        .day-block { margin-bottom: 14px; font-size: 0.85rem; }
         .day-title { color: var(--accent); font-weight: bold; margin-bottom: 4px; }
-        .day-items { opacity: 0.8; padding-left: 10px; border-left: 2px solid rgba(0,210,255,0.2); }
+        .day-items { opacity: 0.8; padding-left: 10px; border-left: 2px solid rgba(0,210,255,0.2); line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -233,64 +233,87 @@
             <h3>🗓️ მთელი კვირის განრიგი</h3>
             
             <div class="day-block">
-                <div class="day-title">ორშაბათი (დისტანციური)</div>
-                <div class="day-items">09:00 - Git / 11:00 - Sass/SCSS / 13:00 - პიროვნული უნარები</div>
+                <div class="day-title">ორშაბათი (აუდ. 103 / ონლაინ 21:00)</div>
+                <div class="day-items">
+                    09:00 - 12:00 | სტილიზაცია Sass/SCSS (ნინი ნოზაძე)<br>
+                    12:00 - 16:00 | პიროვნული უნარები და კომუნიკაცია (ლევან წიქარიძე)<br>
+                    21:00 | მაგისტრატურა (Online)
+                </div>
             </div>
             <div class="day-block">
-                <div class="day-title">სამშაბათი (აუდ. 103)</div>
-                <div class="day-items">09:00 - Sass/SCSS / 13:00 - Git</div>
+                <div class="day-title">სამშაბათი (აუდ. 103 / ონლაინ 21:00)</div>
+                <div class="day-items">
+                    09:00 - 12:00 | სტილიზაცია Sass/SCSS (ნინი ნოზაძე)<br>
+                    12:00 - 15:00 | ვებგვერდის ინტერაქტიულობა და ეფექტები (ნინი ნოზაძე)<br>
+                    21:00 | მაგისტრატურა (Online)
+                </div>
             </div>
             <div class="day-block">
-                <div class="day-title">ოთხშაბათი (დისტანციური)</div>
-                <div class="day-items">09:00 - Git / 13:00 - დარგობრივი ინგლისური</div>
+                <div class="day-title">ოთხშაბათი (დისტანციური / ონლაინ 19:00)</div>
+                <div class="day-items">
+                    09:00 - 15:00 | ვებგვერდის ინტერაქტიულობა და ეფექტები (ნინი ნოზაძე)<br>
+                    19:00 | მაგისტრატურა (Online)
+                </div>
             </div>
             <div class="day-block">
-                <div class="day-title">ხუთშაბათი (დისტანციური)</div>
-                <div class="day-items">09:00 - JS ეფექტები / 13:00 - ინგლისური / 19:00 - მაგისტრატურა</div>
+                <div class="day-title">ხუთშაბათი (დისტანციური / ონლაინ 21:00)</div>
+                <div class="day-items">
+                    09:00 - 13:00 | დინამიური ვებგვერდის შექმნა TypeScript-ით (ნიკა ნოზაძე)<br>
+                    21:00 | მაგისტრატურა (Online)
+                </div>
             </div>
             <div class="day-block">
-                <div class="day-title">პარასკევი (აუდ. 103)</div>
-                <div class="day-items">09:00 - JS ეფექტები / 13:00 - ინგლისური</div>
+                <div class="day-title">პარასკევი (დისტანციური / ონლაინ 19:00)</div>
+                <div class="day-items">
+                    09:00 - 13:00 | დინამიური ვებგვერდის შექმნა TypeScript-ით (ნიკა ნოზაძე)<br>
+                    19:00 | მაგისტრატურა (Online)
+                </div>
             </div>
             <div class="day-block">
                 <div class="day-title">შაბათი (დისტანციური)</div>
-                <div class="day-items">09:00 - JS ეფექტები  / 16:00 - მაგისტრატურა / 17:00 - პიროვნული უნარები )</div>
+                <div class="day-items">
+                    09:00 - 13:00 | დინამიური ვებგვერდის შექმნა TypeScript-ით (ნიკა ნოზაძე)
+                </div>
+            </div>
+            <div class="day-block">
+                <div class="day-title">კვირა</div>
+                <div class="day-items">თავისუფალი დღე 🎉</div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-      // შენი განახლებული რეალური განრიგი
+      // ფოტოებიდან ამოკითხული ზუსტი ლოგიკური განრიგი საათების მიხედვით
       const schedule = {
         1: [ // ორშაბათი
-            { name: "სტილიზაცია Sass/SCSS", teacher: "ნინი ნოზაძე", loc: "103", slots: [9,10,11], type: "bachelor" },
-            { name: "პიროვნული უნარები და ინტერპერსონალური კომუნიკაცია", teacher: "ლევან წიქარიძე", loc: "103", slots: [12,13,14,15], type: "bachelor" }
+            { name: "სტილიზაცია Sass/SCSS", teacher: "ნინი ნოზაძე", loc: "103 აუდიტორია", slots: [9,10,11], type: "bachelor" },
+            { name: "პიროვნული უნარები და კომუნიკაცია", teacher: "ლევან წიქარიძე", loc: "103 აუდიტორია", slots: [12,13,14,15], type: "bachelor" },
+            { name: "მაგისტრატურა", teacher: "ონლაინ ლექტორი", loc: "Online", slots: [21], type: "master" }
         ],
         2: [ // სამშაბათი
-            { name: "სტილიზაცია Sass/SCSS", teacher: "ნინი ნოზაძე", loc: "103", slots: [9,10,11], type: "bachelor" },
-            { name: "REACT", teacher: "ნინი ნოზაძე", loc: "103", slots: [12,13,14], type: "bachelor" },
-            { name: "მაგისტრატურა", teacher: "ბექა ვანაძე", loc: "დისტანციურად", slots: [19], type: "master" }
+            { name: "სტილიზაცია Sass/SCSS", teacher: "ნინი ნოზაძე", loc: "103 აუდიტორია", slots: [9,10,11], type: "bachelor" },
+            { name: "ვებგვერდის ინტერაქტიულობა და ეფექტები", teacher: "ნინი ნოზაძე", loc: "103 აუდიტორია", slots: [12,13,14], type: "bachelor" },
+            { name: "მაგისტრატურა", teacher: "ონლაინ ლექტორი", loc: "Online", slots: [21], type: "master" }
         ],
         3: [ // ოთხშაბათი
-            { name: "REACT", teacher: "ნინი ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12,13,14], type: "bachelor" }
+            { name: "ვებგვერდის ინტერაქტიულობა და ეფექტები", teacher: "ნინი ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12,13,14], type: "bachelor" },
+            { name: "მაგისტრატურა", teacher: "ონლაინ ლექტორი", loc: "Online", slots: [19], type: "master" }
         ],
         4: [ // ხუთშაბათი
-            { name: "typescipt", teacher: "ნიკა ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" },
-            { name: "REACT", teacher: "ნინი ნოზაძე", loc: "დისტანციური", slots: [13,14,15], type: "bachelor" },
-            { name: "მაგისტრატურის ლექცია", teacher: "ბექა ვანაძე", loc: "დისტანციური", slots: [19], type: "master" }
+            { name: "დინამიური ვებგვერდი TypeScript-ით", teacher: "ნიკა ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" },
+            { name: "მაგისტრატურა", teacher: "ონლაინ ლექტორი", loc: "Online", slots: [21], type: "master" }
         ],
         5: [ // პარასკევი
-            { name: "typescipt", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" }
+            { name: "დინამიური ვებგვერდი TypeScript-ით", teacher: "ნიკა ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" },
+            { name: "მაგისტრატურა", teacher: "ონლაინ ლექტორი", loc: "Online", slots: [19], type: "master" }
         ],
         6: [ // შაბათი
-            { name: "typescipt", teacher: "ნიკა ნოზაძე", loc: "103", slots: [9,10,11,12], type: "bachelor" },
-            { name: "მაგისტრატურის ლექცია", teacher: "მაგისტრატურა", loc: "დისტანციური", slots: [17,18], type: "master" } 
+            { name: "დინამიური ვებგვერდი TypeScript-ით", teacher: "ნიკა ნოზაძე", loc: "დისტანციური", slots: [9,10,11,12], type: "bachelor" }
         ],
         0: [] // კვირა
-    };
+      };
 
-        // Modal ფუნქციონალი
         function toggleModal(show) {
             const modal = document.getElementById('scheduleModal');
             modal.style.display = show ? 'flex' : 'none';
@@ -308,7 +331,7 @@
             let nextInDay = today.find(l => l.slots.find(s => s > hr));
             let target = new Date();
             
-            // ხვალინდელი გეგმა
+            // ხვალინდელი დღის პრევიუ
             let nextD = (day + 1) % 7;
             if (schedule[nextD] && schedule[nextD].length > 0) {
                 let uniqueLectures = [...new Set(schedule[nextD].map(l => l.name))];
@@ -317,11 +340,11 @@
                 document.getElementById('tomorrowPlan').innerText = "თავისუფალი დღე! 🎉";
             }
 
-            // წრეხაზის სიგრძის ფორმულა (2 * PI * R) -> 2 * 3.14159 * 110 ≈ 691
             const circleLength = 691;
             const circle = document.getElementById('progressCircle');
             circle.style.strokeDasharray = circleLength;
 
+            // ლექციის მიმდინარეობის 50 წუთიანი ფორმატი
             if (current && min < 50) {
                 target.setHours(hr, 50, 0);
                 const color = current.type === "master" ? "#ff007a" : "#00d2ff";
@@ -347,6 +370,7 @@
                 
                 if (nSched) {
                     target.setHours(nSched.slots[0], 0, 0);
+                    target.setMinutes(0, 0, 0);
                     refresh("მოლოდინი", nSched.name, nSched.teacher, nSched.loc, "#8b949e", target - now, 0, circleLength);
                 } else {
                     refresh("თავისუფალი", "ლექციები არ არის", "--", "--", "#00ff88", 0, 0, circleLength);
@@ -383,7 +407,7 @@
                 `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
         }
 
-        // Particles Configuration
+        // Particles JS კონფიგურაცია
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
